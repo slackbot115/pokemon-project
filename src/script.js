@@ -15,8 +15,13 @@ const pokemonStats = document.querySelector('.pokemon__stats');
 
 let searchPokemon = 1;
 
-const consoleVersion = 'a'; //gb, gbc, gba
+const consoleVersion = window.localStorage.getItem('consoleVersion'); //gb, gbc, gba, anim //TODO enum dos consoles
 const pokedexImage = document.querySelector('.pokedex');
+
+const buttonReturnIndex = document.querySelector('.btn-return-index')
+buttonReturnIndex.addEventListener('click', () => {
+    window.location.href = 'index.html';
+});
 
 const fetchPokemon = async (pokemon) => {
     const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
@@ -25,7 +30,6 @@ const fetchPokemon = async (pokemon) => {
         const data = await APIResponse.json();
         return data;
     }
-
 }
 
 const renderPokemon = async (pokemon) => {
@@ -39,19 +43,18 @@ const renderPokemon = async (pokemon) => {
         pokemonName.innerHTML = data.name;
         pokemonNumber.innerHTML = data.id;
 
-        // TODO abstrair função de formatação de altura
-        pokemonHeight.innerHTML = `Height: ${data.height}`;
+        pokemonHeight.innerHTML = getPokemonHeight(data.height);
         pokemonWeight.innerHTML = `Weight: ${data.weight}`;
 
         // TODO abstrair função de estilização de peso
         if (data.weight < 100) {
-            pokemonStats.style.right = '23.8%';
+            pokemonStats.style.right = '19.8%';
         }
         else if (data.weight >= 100 && data.weight < 999) {
-            pokemonStats.style.right = '22.1%';
+            pokemonStats.style.right = '18.1%';
         }
         else if (data.weight > 999) {
-            pokemonStats.style.right = '20.4%';
+            pokemonStats.style.right = '17.4%';
         }
 
         for (let index = 0; index < data.types.length; index++) {
@@ -61,7 +64,7 @@ const renderPokemon = async (pokemon) => {
             const type_name = document.createElement('p');
             type_name.innerHTML = type;
 
-            // TODO extrair metodo para troca de cores dos tipos
+            // TODO extrair método para troca de cores dos tipos
             switch (type) {
                 case 'normal':
                     type_name.style.color = '#A8A77A';
@@ -126,7 +129,7 @@ const renderPokemon = async (pokemon) => {
 
         pokemonImage.style.display = 'block';
 
-        // TODO extrair metodo para troca de consoles e sprites
+        // TODO extrair método para troca de consoles e sprites
 
         if (consoleVersion === 'gb') {
             pokemonImage.src = data['sprites']['versions']['generation-i']['red-blue']['front_gray'];
@@ -192,6 +195,31 @@ function checkConsoleVersion() {
     else {
         pokedexImage.src = '/assets/images/pokedex_kanto.png';
     }
+}
+
+function getPokemonHeight(height) {
+    let convertedHeight = height / 0.1;
+    return `Height: ${convertedHeight} cm`
+}
+
+function changeConsoleVersion(selectedVersion) {
+    if (selectedVersion === 'gb') {
+        window.localStorage.setItem('consoleVersion', 'gb');
+    }
+    else if (selectedVersion === 'gbc') {
+        window.localStorage.setItem('consoleVersion', 'gbc');
+    }
+    else if (selectedVersion === 'gba') {
+        window.localStorage.setItem('consoleVersion', 'gba');
+    }
+    else if (selectedVersion === 'anim') {
+        window.localStorage.setItem('consoleVersion', 'anim');
+    }
+    else {
+        window.location.reload();
+    }
+
+    window.location.href = "pokedex.html";
 }
 
 checkConsoleVersion();
