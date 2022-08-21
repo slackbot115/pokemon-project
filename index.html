@@ -12,8 +12,7 @@
   </head>
   <body>
     <main>
-      <!-- TODO
-        Exibir certos valores na pokedex:
+      <!-- TODO Exibir certos valores na pokedex:
         Numero
         Nome
         Altura
@@ -22,8 +21,7 @@
         Tipo
       -->
 
-      <!-- TODO
-        Trocar sprites dos pokemons de acordo com o console escolhido
+      <!-- TODO Trocar sprites dos pokemons de acordo com o console escolhido
 
         https://github.com/PokeAPI/sprites/tree/master/sprites/pokemon/versions
       -->
@@ -35,6 +33,17 @@
         <span class="pokemon__name">Bulbasaur</span>
       </h1>
 
+      <h1 class="pokemon__stats">
+        <span class="pokemon__height">Height</span>
+        <br />
+        <span class="pokemon__weight">Weight</span>
+        <br />
+        <span>Type(s):</span>
+        <div class="pokemon__types"></div>
+      </h1>
+
+      <!-- TODO adicionar funções de rotação aos dpads -->
+
       <form class="form">
         <input
           type="search"
@@ -43,6 +52,8 @@
           required
         />
       </form>
+
+      <!-- TODO adicionar avanco ou retrocesso dos pokemons pelas setas do teclado -->
 
       <div class="buttons">
         <button class="button btn-prev">Prev &lt;</button>

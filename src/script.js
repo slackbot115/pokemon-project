@@ -1,14 +1,17 @@
 const pokemonName = document.querySelector('.pokemon__name');
-
 const pokemonNumber = document.querySelector('.pokemon__number');
-
 const pokemonImage = document.querySelector('.pokemon__image');
+const pokemonHeight = document.querySelector('.pokemon__height');
+const pokemonWeight = document.querySelector('.pokemon__weight');
+const pokemonTypes = document.querySelector('.pokemon__types');
 
 const form = document.querySelector('.form');
 const input = document.querySelector('.input__search');
 
 const buttonPrev = document.querySelector('.btn-prev');
 const buttonNext = document.querySelector('.btn-next');
+
+const pokemonStats = document.querySelector('.pokemon__stats');
 
 let searchPokemon = 1;
 
@@ -25,11 +28,99 @@ const fetchPokemon = async (pokemon) => {
 const renderPokemon = async (pokemon) => {
     pokemonName.innerHTML = 'Loading...';
 
+    pokemonTypes.innerHTML = '';
+
     const data = await fetchPokemon(pokemon);
 
     if (data) {
         pokemonName.innerHTML = data.name;
         pokemonNumber.innerHTML = data.id;
+
+        // TODO abstrair função de formatação de altura
+        pokemonHeight.innerHTML = `Height: ${data.height}`;
+        pokemonWeight.innerHTML = `Weight: ${data.weight}`;
+
+        // TODO abstrair função de estilização de peso
+        if (data.weight < 100) {
+            pokemonStats.style.right = '23.8%';
+        }
+        else if (data.weight >= 100 && data.weight < 999) {
+            pokemonStats.style.right = '22.1%';
+        }
+        else if (data.weight > 999) {
+            pokemonStats.style.right = '20.4%';
+        }
+
+        for (let index = 0; index < data.types.length; index++) {
+            const element = data.types[index];
+            const type = element['type']['name']
+
+            const type_name = document.createElement('p');
+            type_name.innerHTML = type;
+
+            // TODO extrair metodo para troca de cores dos tipos
+            switch (type) {
+                case 'normal':
+                    type_name.style.color = '#A8A77A';
+                    break;
+                case 'fire':
+                    type_name.style.color = '#EE8130';
+                    break;
+                case 'water':
+                    type_name.style.color = '#6390F0';
+                    break;
+                case 'electric':
+                    type_name.style.color = '#F7D02C';
+                    break;
+                case 'grass':
+                    type_name.style.color = '#7AC74C';
+                    break;
+                case 'ice':
+                    type_name.style.color = '#96D9D6';
+                    break;
+                case 'fighting':
+                    type_name.style.color = '#C22E28';
+                    break;
+                case 'poison':
+                    type_name.style.color = '#A33EA1';
+                    break;
+                case 'ground':
+                    type_name.style.color = '#E2BF65';
+                    break;
+                case 'flying':
+                    type_name.style.color = '#A98FF3';
+                    break;
+                case 'psychic':
+                    type_name.style.color = '#F95587';
+                    break;
+                case 'bug':
+                    type_name.style.color = '#A6B91A';
+                    break;
+                case 'rock':
+                    type_name.style.color = '#B6A136';
+                    break;
+                case 'ghost':
+                    type_name.style.color = '#735797';
+                    break;
+                case 'dragon':
+                    type_name.style.color = '#6F35FC';
+                    break;
+                case 'dark':
+                    type_name.style.color = '#705746';
+                    break;
+                case 'steel':
+                    type_name.style.color = '#B7B7CE';
+                    break;
+                case 'fairy':
+                    type_name.style.color = '#D685AD';
+                    break;
+                default:
+                    break;
+            }
+
+            pokemonTypes.appendChild(type_name);
+        }
+
         pokemonImage.style.display = 'block';
         pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
 

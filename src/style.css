@@ -47,6 +47,16 @@ main {
   text-transform: capitalize;
 }
 
+.pokemon__stats {
+  position: absolute;
+  text-align: left;
+  font-weight: 400;
+  color: #fff;
+  top: 32.5%;
+  right: 20%;
+  font-size: clamp(8px, 1.3vw, 25px);
+}
+
 .form {
   position: absolute;
   width: 65%;
