@@ -7,14 +7,9 @@
   font-family: "Oxanium", cursive;
 }
 
-.body-pokedex {
+body {
   text-align: center;
   background: linear-gradient(to bottom, #6ab7f5, #fff);
-  min-height: 100vh;
-}
-
-.body-index {
-  text-align: center;
   min-height: 100vh;
 }
 
