@@ -15,6 +15,9 @@ const pokemonStats = document.querySelector('.pokemon__stats');
 
 let searchPokemon = 1;
 
+const consoleVersion = 'a'; //gb, gbc, gba
+const pokedexImage = document.querySelector('.pokedex');
+
 const fetchPokemon = async (pokemon) => {
     const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 
@@ -122,7 +125,26 @@ const renderPokemon = async (pokemon) => {
         }
 
         pokemonImage.style.display = 'block';
-        pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+
+        // TODO extrair metodo para troca de consoles e sprites
+
+        if (consoleVersion === 'gb') {
+            pokemonImage.src = data['sprites']['versions']['generation-i']['red-blue']['front_gray'];
+        }
+        else if (consoleVersion === 'gbc') {
+            pokemonImage.src = data['sprites']['versions']['generation-ii']['silver']['front_transparent'];
+            pokemonImage.style.bottom = '45%';
+            pokemonImage.style.height = '22%';
+        }
+        else if (consoleVersion === 'gba') {
+            pokemonImage.src = data['sprites']['versions']['generation-iii']['ruby-sapphire']['front_default'];
+            pokemonImage.style.bottom = '47%';
+            pokemonImage.style.left = '33%';
+            pokemonImage.style.height = '17%';
+        }
+        else {
+            pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+        }
 
         input.value = '';
 
@@ -156,4 +178,21 @@ buttonNext.addEventListener('click', () => {
     renderPokemon(searchPokemon);
 });
 
+function checkConsoleVersion() {
+    if (consoleVersion === 'gb') {
+        pokedexImage.src = '/assets/images/pokedex_kanto_gb_stage.png';
+        pokemonImage.style['mix-blend-mode'] = 'multiply';
+    }
+    else if (consoleVersion === 'gbc') {
+        pokedexImage.src = '/assets/images/pokedex_kanto_gbc_stage.png';
+    }
+    else if (consoleVersion === 'gba') {
+        pokedexImage.src = '/assets/images/pokedex_kanto_gba_stage.png';
+    }
+    else {
+        pokedexImage.src = '/assets/images/pokedex_kanto.png';
+    }
+}
+
+checkConsoleVersion();
 renderPokemon(searchPokemon);
