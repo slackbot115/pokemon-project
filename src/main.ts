@@ -23,9 +23,6 @@ const buttonNext = document.querySelector(".btn-next") as HTMLButtonElement;
 const buttonReturnIndex = document.querySelector(
   ".btn-return-index"
 ) as HTMLButtonElement;
-buttonReturnIndex?.addEventListener("click", () => {
-  window.location.href = "index.html";
-});
 
 const pokemonStats = document.querySelector(
   ".pokemon__stats"
@@ -36,6 +33,8 @@ const pokedexImage = document.querySelector(".pokedex") as HTMLImageElement;
 const consoleVersion = window.localStorage.getItem("consoleVersion");
 
 let searchPokemon = 1;
+
+const body = document.getElementsByTagName("body")[0] as HTMLBodyElement;
 
 const fetchPokemon = async (pokemon: string | number) => {
   const APIResponse = await fetch(
@@ -49,6 +48,8 @@ const fetchPokemon = async (pokemon: string | number) => {
 };
 
 const renderPokemon = async (pokemon: string | number) => {
+  body.style.backgroundImage = "";
+
   pokemonName.innerHTML = "Loading...";
 
   pokemonStats.style.display = "block";
@@ -84,6 +85,10 @@ const renderPokemon = async (pokemon: string | number) => {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  if (input.value == "000" && consoleVersion === "gb") {
+    return activateMissingNo();
+  }
+
   renderPokemon(input.value.toLowerCase());
 });
 
@@ -100,6 +105,44 @@ buttonNext.addEventListener("click", () => {
 
   renderPokemon(searchPokemon);
 });
+
+buttonReturnIndex.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+document.onkeydown = function (evt) {
+  if (evt.key == "ArrowLeft") {
+    if (searchPokemon > 1) {
+      searchPokemon -= 1;
+
+      renderPokemon(searchPokemon);
+    }
+  } else if (evt.key == "ArrowRight") {
+    searchPokemon += 1;
+
+    renderPokemon(searchPokemon);
+  }
+};
+function activateMissingNo() {
+  pokemonName.innerHTML = "MissingNo";
+  pokemonNumber.innerHTML = "";
+  pokemonHeight.innerHTML = "Height: 10 cm";
+  pokemonWeight.innerHTML = "Weight: 10";
+  pokemonTypes.innerHTML = "";
+  const type_name = document.createElement("p");
+  type_name.innerHTML = "normal";
+  displayElementInColor("normal", type_name);
+  pokemonTypes.appendChild(type_name);
+  pokemonImage.src =
+    "https://archives.bulbagarden.net/media/upload/9/98/Missingno_RB.png";
+
+  body.style.backgroundImage =
+    "url(https://st3.depositphotos.com/1021369/13022/v/600/depositphotos_130226020-stock-illustration-seamless-black-and-white-background.jpg)";
+
+  input.value = "";
+  return;
+}
+
 //#endregion
 
 function displayPokemonTypes(data: any) {
