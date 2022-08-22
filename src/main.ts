@@ -123,6 +123,7 @@ document.onkeydown = function (evt) {
     renderPokemon(searchPokemon);
   }
 };
+
 function activateMissingNo() {
   pokemonName.innerHTML = "MissingNo";
   pokemonNumber.innerHTML = "";
@@ -133,8 +134,7 @@ function activateMissingNo() {
   type_name.innerHTML = "normal";
   displayElementInColor("normal", type_name);
   pokemonTypes.appendChild(type_name);
-  pokemonImage.src =
-    "https://archives.bulbagarden.net/media/upload/9/98/Missingno_RB.png";
+  pokemonImage.src = "/pokemon-project/assets/images/missingno.png";
 
   body.style.backgroundImage =
     "url(https://st3.depositphotos.com/1021369/13022/v/600/depositphotos_130226020-stock-illustration-seamless-black-and-white-background.jpg)";
@@ -259,14 +259,17 @@ function changePokemonSprites(data: any) {
 
 function checkConsoleVersion() {
   if (consoleVersion === "gb") {
-    pokedexImage.src = "/assets/images/pokedex_kanto_gb_stage.png";
+    pokedexImage.src =
+      "/pokemon-project/assets/images/pokedex_kanto_gb_stage.png";
     pokemonImage.style.mixBlendMode = "darken";
   } else if (consoleVersion === "gbc") {
-    pokedexImage.src = "/assets/images/pokedex_kanto_gbc_stage.png";
+    pokedexImage.src =
+      "/pokemon-project/assets/images/pokedex_kanto_gbc_stage.png";
   } else if (consoleVersion === "gba") {
-    pokedexImage.src = "/assets/images/pokedex_kanto_gba_stage.png";
+    pokedexImage.src =
+      "/pokemon-project/assets/images/pokedex_kanto_gba_stage.png";
   } else {
-    pokedexImage.src = "/assets/images/pokedex_kanto.png";
+    pokedexImage.src = "/pokemon-project/assets/images/pokedex_kanto.png";
   }
 }
 
