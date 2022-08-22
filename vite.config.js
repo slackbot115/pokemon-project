@@ -7,7 +7,7 @@ const outDir = resolve(__dirname, "dist");
 
 export default defineConfig({
   base: "/pokemon-project/",
-  plugins: [ghPages],
+  plugins: [ghPages()],
   root: root,
   build: {
     outDir: outDir,
